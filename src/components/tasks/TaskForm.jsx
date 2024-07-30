@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import clsx from "clsx";
 import { ChevronDownIcon } from "@radix-ui/themes";
 import FormController from "./FormController";
+import { useDispatch } from "react-redux";
+import { addTask } from "../../redux/features/tasksSlice";
 
 const TaskForm = ({ setIsOpen }) => {
   const { control, handleSubmit } = useForm({
@@ -15,7 +17,11 @@ const TaskForm = ({ setIsOpen }) => {
     },
   });
 
-  const onSubmit = (data) => console.log(data);
+  const dispatch = useDispatch();
+
+  const onSubmit = (data) => {
+    dispatch(addTask(data));
+  };
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}

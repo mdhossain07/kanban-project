@@ -1,24 +1,38 @@
-import { ArrowRightIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { removeTask, updateStatus } from "../../redux/features/tasksSlice";
+import { useDispatch } from "react-redux";
 
-const TaskCard = () => {
-  const task = {
-    id: 1,
-    status: 'pending',
-    title: 'Remove Button',
-    description:
-      'We need a remove button in our task card. Meke the button red and use Heroicon for tashbin icon.',
-    date: '2023-08-28',
-    assignedTo: 'Mir Hussain',
-    priority: 'high',
-  };
+const TaskCard = ({ task }) => {
+  const dispatch = useDispatch();
+
+  let updatedStatus;
+
+  if (task?.status === "todo") {
+    updatedStatus = "doing";
+  } else if (task?.status === "doing") {
+    updatedStatus = "done";
+  } else {
+    updatedStatus = "archive";
+  }
+
+  // const task = {
+  //   id: 1,
+  //   status: 'pending',
+  //   title: 'Remove Button',
+  //   description:
+  //     'We need a remove button in our task card. Meke the button red and use Heroicon for tashbin icon.',
+  //   date: '2023-08-28',
+  //   assignedTo: 'Mir Hussain',
+  //   priority: 'high',
+  // };
 
   return (
     <div className="bg-secondary/10 rounded-md p-5">
       <h1
         className={`text-lg font-semibold mb-3  ${
-          task.priority === 'high' ? 'text-red-500' : ''
-        } ${task.priority === 'medium' ? 'text-yellow-500' : ''} ${
-          task.priority === 'low' ? 'text-green-500' : ''
+          task?.priority === "High" ? "text-red-500" : ""
+        } ${task?.priority === "Medium" ? "text-yellow-500" : ""} ${
+          task?.priority === "Low" ? "text-green-500" : ""
         }`}
       >
         {task?.title}

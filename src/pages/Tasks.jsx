@@ -3,16 +3,20 @@ import MyTasks from "../components/tasks/MyTasks";
 import TaskCard from "../components/tasks/TaskCard";
 import { useState } from "react";
 import AddTaskModal from "../components/tasks/AddTaskModal";
+import { useSelector } from "react-redux";
 
 const Tasks = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { allTasks } = useSelector((state) => state.tasks);
+
+  console.log("tasks", allTasks);
 
   return (
     <div className="h-screen grid grid-cols-12">
       <div className="col-span-9 px-10 pt-10">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="font-semibold text-3xl">Tasks</h1>
+            <h1 className="font-semibold text-3xl">Tasks Manager</h1>
           </div>
           <div className="flex gap-5">
             <button className="border-2 border-secondary/20 hover:border-primary hover:bg-primary rounded-xl h-10 w-10  grid place-content-center text-secondary hover:text-white transition-all">
@@ -45,7 +49,9 @@ const Tasks = () => {
               </p>
             </div>
             <div className="space-y-3">
-              <TaskCard />
+              {allTasks?.map((item) => (
+                <TaskCard key={item?.id} task={item} />
+              ))}
             </div>
           </div>
           <div className="relative h-[800px] overflow-auto">
@@ -73,6 +79,8 @@ const Tasks = () => {
           </div>
         </div>
       </div>
+
+      {/* Members & My Tasks Section */}
       <div className="col-span-3 border-l-2 border-secondary/20 px-10 pt-10">
         <div>
           <h1 className="text-xl">Members</h1>
